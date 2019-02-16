@@ -13,7 +13,8 @@ def pickColor():
     magenta = (1 - green)
     yellow = (1 - blue)
 
-    print("C: ", cyan, "M: ", magenta, "Y: ", yellow)
+    cmy = [cyan, magenta, yellow]
+    return cmy
 
 root = Tk()
 root.title('Color Chooser')
