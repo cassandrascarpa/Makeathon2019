@@ -14,8 +14,9 @@ def pickColor():
     yellow = (1 - blue)
 
     cmy = [cyan, magenta, yellow]
-    return cmy
+    ArduinoSerial.write(cmy)
 
+ArduinoSerial = serial.Serial('com18', 9600)
 root = Tk()
 root.title('Color Chooser')
 screen = Canvas(root, width=800, height=800)
