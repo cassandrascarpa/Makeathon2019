@@ -9,12 +9,11 @@ def pickColor():
     green = (color[0][1])/255
     blue = (color[0][2])/255
 
-    k = 1 - max(red, green, blue)
-    cyan = (1 - red - k) / (1 - k)
-    magenta = (1 - green - k) / (1 - k)
-    yellow = (1 - blue - k) / (1 - k)
+    cyan = (1 - red)
+    magenta = (1 - green)
+    yellow = (1 - blue)
 
-    print("C: ", cyan, "M: ", magenta, "Y: ", yellow, "K: ", k)
+    print("C: ", cyan, "M: ", magenta, "Y: ", yellow)
 
 root = Tk()
 root.title('Color Chooser')
