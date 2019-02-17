@@ -7,27 +7,38 @@ String inString = "";
 boolean gotInput;
 boolean canReadSerial;
 
-int cupRotationAngle = 180;
 int scale = 1000;
 
-int motor = 4;
+int pos;
 
 Servo cyanCup;
 Servo magentaCup;
-//Servo yellowCup;
-//Servo mixMotor;
+Servo yellowCup;
+Servo mixMotor;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(motor, OUTPUT);
   reset();
   cyanCup.attach(5);
-  magentaCup.attach(7);
-  //yellowCup.attach(7);
- // mixMotor.attach(8);
+  cyanCup.write(90);
+  delay(100);
+  cyanCup.detach();
+  magentaCup.attach(6);
+   magentaCup.write(180);
+   delay(100);
+   magentaCup.detach();
+  yellowCup.attach(7);
+  yellowCup.write(90);
+  delay(100);
+  yellowCup.detach();
+  mixMotor.attach(4);
+   mixMotor.write(90);
+   delay(100);
+   mixMotor.detach();
 }
 
 void reset() {
+  mix();
   index = 0;
   String inString = "";
   gotInput = false;
@@ -35,28 +46,47 @@ void reset() {
 }
 
 void dispensePaints() {
-  
-  cyanCup.write(cupRotationAngle);
+
+  cyanCup.attach(5);
+  cyanCup.write(0);
   delay(cmy[0]*scale);
   cyanCup.write(90);
+  delay(100);
+  cyanCup.detach();
   
   delay(1000);
-  
-  magentaCup.write(cupRotationAngle);
-  delay(cmy[1]*scale);
+
+  magentaCup.attach(6);
   magentaCup.write(90);
-  /*
-  yellowCup.write(cupRotationAngle);
+  delay(cmy[1]*scale);
+  magentaCup.write(180);
+  delay(100);
+  magentaCup.detach();
+
+  delay(1000);
+
+  yellowCup.attach(7);
+  yellowCup.write(0);
   delay(cmy[2]*scale);
-  yellowCup.write(0);*/
+  yellowCup.write(90);
+  delay(100);
+  yellowCup.detach();
 
   delay(1000);
 }
 
 void mix() {
-  digitalWrite(motor, HIGH);
-  delay(5000);
-  digitalWrite(motor, LOW);
+  mixMotor.attach(4);
+  for (pos = 0; pos <= 180; pos += 1) { 
+    // in steps of 1 degree
+    mixMotor.write(pos);              
+    delay(15);                       
+  }
+  for (pos = 180; pos >= 0; pos -= 1) { 
+    mixMotor.write(pos);              
+    delay(15);                       
+  }
+  mixMotor.detach();
 }
 
 void loop() {
@@ -79,7 +109,8 @@ void loop() {
   if(gotInput) {
     canReadSerial = false;
     dispensePaints();
-    mix();
+    delay(2000);
+    /*mix();*/
     reset();
   }
 }
