@@ -1,11 +1,11 @@
 #include <Servo.h>
 
 float cmy[3];
-int index;
+int index = 0;
 String inString = "";
 
-boolean gotInput;
-boolean canReadSerial;
+boolean gotInput = false;
+boolean canReadSerial = true;
 
 int scale = 1000;
 
@@ -18,23 +18,21 @@ Servo mixMotor;
 
 void setup() {
   Serial.begin(9600);
-  reset();
+  
   cyanCup.attach(5);
   cyanCup.write(90);
   delay(100);
   cyanCup.detach();
+  
   magentaCup.attach(6);
-   magentaCup.write(180);
-   delay(100);
-   magentaCup.detach();
+  magentaCup.write(180);
+  delay(100);
+  magentaCup.detach();
+  
   yellowCup.attach(7);
   yellowCup.write(90);
   delay(100);
   yellowCup.detach();
-  mixMotor.attach(4);
-   mixMotor.write(90);
-   delay(100);
-   mixMotor.detach();
 }
 
 void reset() {
