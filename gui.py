@@ -15,6 +15,7 @@ def pickColor():
 
     cmy = ",".join([str(cyan), str(magenta), str(yellow)])
     ArduinoSerial.write(str.encode(cmy))
+    exit()
 
 ArduinoSerial = serial.Serial('/dev/ttyUSB0', 9600)
 root = Tk()
