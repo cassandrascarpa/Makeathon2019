@@ -16,21 +16,25 @@ Servo magentaCup;
 Servo yellowCup;
 Servo mixMotor;
 
+int cyanStart = 90;
+int magentaStart = 180;
+int yellowStart = 90;
+
 void setup() {
   Serial.begin(9600);
   
   cyanCup.attach(5);
-  cyanCup.write(90);
+  cyanCup.write(cyanStart);
   delay(100);
   cyanCup.detach();
   
   magentaCup.attach(6);
-  magentaCup.write(180);
+  magentaCup.write(magentaStart);
   delay(100);
   magentaCup.detach();
   
   yellowCup.attach(7);
-  yellowCup.write(90);
+  yellowCup.write(yellowStart);
   delay(100);
   yellowCup.detach();
 }
@@ -48,7 +52,7 @@ void dispensePaints() {
   cyanCup.attach(5);
   cyanCup.write(0);
   delay(cmy[0]*scale);
-  cyanCup.write(90);
+  cyanCup.write(cyanStart);
   delay(100);
   cyanCup.detach();
   
@@ -57,7 +61,7 @@ void dispensePaints() {
   magentaCup.attach(6);
   magentaCup.write(90);
   delay(cmy[1]*scale);
-  magentaCup.write(180);
+  magentaCup.write(magentaStart);
   delay(100);
   magentaCup.detach();
 
@@ -66,7 +70,7 @@ void dispensePaints() {
   yellowCup.attach(7);
   yellowCup.write(0);
   delay(cmy[2]*scale);
-  yellowCup.write(90);
+  yellowCup.write(yellowStart);
   delay(100);
   yellowCup.detach();
 
@@ -76,7 +80,6 @@ void dispensePaints() {
 void mix() {
   mixMotor.attach(4);
   for (pos = 0; pos <= 180; pos += 1) { 
-    // in steps of 1 degree
     mixMotor.write(pos);              
     delay(15);                       
   }
@@ -108,7 +111,6 @@ void loop() {
     canReadSerial = false;
     dispensePaints();
     delay(2000);
-    /*mix();*/
     reset();
   }
 }
